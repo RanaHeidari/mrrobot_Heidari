@@ -1,0 +1,68 @@
+
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block content %}
+<br><br><br>
+
+<div class="container">
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="{{ product.picture.url }}" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">{{ product.description }}</p>
+
+                    {% if product.is_sale %}
+                    <p class="card-text"> 💰 قیمت : <strike>{{ product.price | intcomma }}</strike> - {{ product.sale_price | intcomma }} تومان</p>
+                    {% else %}
+                    <p class="card-text">💰 قیمت : {{ product.price | intcomma }} تومان</p>
+                    {% endif %}
+                    تعداد:
+                    <select class="form-select" id="cart_qty">
+                          <option value="1">&nbsp;&nbsp;&nbsp;&nbsp; 1</option>
+                          <option value="2">&nbsp;&nbsp;&nbsp;&nbsp; 2</option>
+                          <option value="3">&nbsp;&nbsp;&nbsp;&nbsp; 3</option>
+                          <option value="4">&nbsp;&nbsp;&nbsp;&nbsp; 4</option>
+                    </select>
+                    <br><br><br>
+                    <button class="btn btn-secondary add-to-cart" type="button" data-product-id="{{ product.id }}">اضافه کردن به سبد خرید</button>
+                    <a href="{% url 'home' %}" class="btn btn-secondary">بازگشت به صفحه اصلی</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br><br><br><br>
+
+<script>
+    $(document).on('click', '.add-to-cart', function(e){
+        e.preventDefault();
+        var productId = $(this).data('product-id');
+        var productQty = $('#cart_qty option:selected').val(); // اصلاح شناسه
+
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'cart_add' %}',
+            data: {
+                product_id: productId,
+                product_qty: productQty, // ارسال مقدار درست
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+            },
+            success: function(json){
+                console.log(json);
+                $('#cart_quantity').text(json.qty); // فرض بر اینکه یک عنصر با ID 'cart_quantity' وجود دارد
+                location.reload();
+            },
+            error: function(xhr, errmsg, err){
+                console.log(xhr.status + ": " + xhr.responseText);
+            }
+        });
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+ <!-- Header-->
+  <header class="bg-dark py-5">
+      <div class="container px-4 px-lg-5 my-5">
+          <div class="text-center text-white">
+              <h1 class="display-4 fw-bolder">ثبت نام کنید</h1>
+              <p class="lead fw-normal text-white-50 mb-0">همین امروز ، اکانت خود را بسازید !</p>
+          </div>
+      </div>
+  </header>
+    <br><br>
+   <div class="container">
+       <div class="row">
+           <center>
+               <div class="col-11">
+                  <form method="post", action="{% url 'signup' %}">
+                      {% csrf_token %}
+
+                      <div class="mb-3">
+                        <input type="text" maxlength="50" class="form-control" name="first_name" placeholder="نام خود را وارد کنید">
+                      </div>
+                      <div class="mb-3">
+                        <input type="text" maxlength="50" class="form-control" name="last_name" placeholder="نام خانوادگی خود را وارد کنید">
+                      </div>
+                       <div class="mb-3">
+                        <input type="text" class="form-control" name="email" placeholder="ایمیل خود را وارد کنید">
+                      </div>
+                      <div class="mb-3">
+                        <input type="text" maxlength="20" class="form-control" name="username" placeholder="نام کاربری خود را وارد کنید">
+                      </div>
+                       <div class="mb-3">
+                        <input type="password" class="form-control" name="password1" placeholder="رمز بالای 8 کاراکتر را وارد کنید">
+                      </div>
+                      <div class="mb-3">
+                        <input type="password" class="form-control" name="password2" placeholder="دوباره رمز خود را وارد کنید">
+                      </div>
+
+                      <button type="submit" class="btn btn-secondary">ثبت نام</button>
+                  </form>
+               </div>
+           </center>
+       </div>
+   </div>
+    <br><br>
+
+
+{% endblock %}

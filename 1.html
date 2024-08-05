@@ -1,0 +1,61 @@
+<!--{% extends 'base.html' %}-->
+<!--{% load humanize %}-->
+
+<!--{% block content %}-->
+<!--<br><br><br>-->
+
+<!--<div class="container">-->
+<!--    <div class="card mb-3">-->
+<!--  <div class="row g-0">-->
+<!--    <div class="col-md-4">-->
+<!--      <img src="{{ product.picture.url }}" class="img-fluid rounded-start" alt="...">-->
+<!--    </div>-->
+<!--    <div class="col-md-8">-->
+<!--      <div class="card-body">-->
+<!--        <h5 class="card-title">{{ product.name }}</h5>-->
+<!--        <p class="card-text">{{ product.description }}</p>-->
+
+<!--        {% if product.is_sale %}-->
+<!--        <p class="card-text"> 💰 قیمت : <strike>{{ product.price | intcomma }}</strike> - {{ product.sale_price | intcomma }} تومان</p>-->
+
+
+<!--        {% else %}-->
+<!--           <p class="card-text">💰 قیمت : {{ product.price | intcomma }} تومان  </p>-->
+
+<!--        {% endif %}-->
+<!--        <br><br><br>-->
+<!--        <button class="btn btn-secondary" type="button" value="{{ product.id }}" id="add_cart">اضافه کردن به سبد خرید</button>-->
+<!--        <a href="{% url 'home' %}" class="btn btn-secondary">بازگشت به صفحه اصلی</a>-->
+
+
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<br><br><br><br><br>-->
+<!--<script>-->
+<!--  $(document).on('click', '#add_cart', function(){-->
+<!--  e.preventDefault();-->
+<!--  $ajax{-->
+<!--    type:'POST',-->
+<!--    url:'{% url 'cart_add' %}',-->
+<!--    data:{-->
+<!--        product_id : $ ('#add_cart').val(),-->
+<!--        csrfmiddlewaretoken: '{{ csrf_token }}',-->
+<!--        action : 'post'-->
+<!--    },-->
+<!--    success : function(json){-->
+<!--    &lt;!&ndash; console.log(json)&ndash;&gt;-->
+<!--    docement.getElementById('cart_quantity').textcontent = json.qty-->
+
+
+<!--    },-->
+<!--    error: function(xhr, errmsg, err){-->
+
+<!--    }-->
+
+<!--    }-->
+<!--  })-->
+<!--</script>-->
+<!--{% endblock %}-->
