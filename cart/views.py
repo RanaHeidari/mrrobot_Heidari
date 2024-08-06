@@ -28,17 +28,27 @@ def cart_add(request):
         messages.success(request, "محصولی به سبد خرید شما اضافه شد")
 
         return response
+def cart_delete(request):
+    cart = Cart(request)
+    if request.POST.get('action') == 'post':
+        product_id = int(request.POST.get('product_id'))
+        cart.delete(product=product_id)
+
+        response = JsonResponse({'product': product_id })
+        messages.success(request, "سبد خرید شما ویرایش شد")
+
+        return response
+
+
 def cart_update(request):
     cart = Cart(request)
     if request.POST.get('action') == 'post':
         product_id = int(request.POST.get('product_id'))
         product_qty = int(request.POST.get('product_qty'))
-        cart.update(product=product_id, quantity=product_qty)
-        total = cart.get_total()  # محاسبه مجموع کل سفارشات
 
+        cart.update(product=product_id, quantity=product_qty)
         response = JsonResponse({'qty': product_qty })
         messages.success(request, "سبد خرید شما ویرایش شد")
-        # print(f"Product ID: {product_id}, Quantity: {product_qty}")
 
         return response
 

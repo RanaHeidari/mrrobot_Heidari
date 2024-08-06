@@ -49,7 +49,7 @@
                     <br>
                     <button type="button" data-index={{product.id}}" class="btn btn-primary update-cart">ویرایش</button>
 
-<!--                    <button type="button" data-index={{product.id}}" class="btn btn-danger delete-product">حذف</button>-->
+                    <button type="button" data-index={{product.id}}" class="btn btn-danger delete-product">حذف</button>
 
                     <a href="{% url 'home' %}" class="btn btn-secondary">بازگشت به صفحه اصلی</a>
                 </div>
@@ -70,14 +70,33 @@
     $(document).on('click', '.update-cart', function(e) {
         e.preventDefault();
         var productid = $(this).data('index');
-        var productQty = $('#select'+productid+ option:'selected').val(); // اصلاح انتخابگر و دریافت مقدار صحیح
 
         $.ajax({
             type: 'POST',
             url: '{% url "cart_update" %}', // تغییر علامت نقل قول
             data: {
+                product_id: $(this).data('index'),
+                product_qty: $('select'+productid+ option:'selected').text(), // ارسال مقدار درست
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+            },
+            success: function(json) {
+                location.reload();
+            },
+            error: function(xhr, errmsg, err) {
+                console.log(xhr.status + ": " + xhr.responseText);
+            }
+        });
+    });
+
+    $(document).on('click', '.delete-product', function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: '{% url "cart_delete" %}',
+            data: {
                 product_id: productid,
-                product_qty: productQty, // ارسال مقدار درست
                 csrfmiddlewaretoken: '{{ csrf_token }}',
                 action: 'post'
             },
