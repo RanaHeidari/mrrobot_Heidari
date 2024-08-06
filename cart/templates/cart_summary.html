@@ -49,7 +49,7 @@
                     <br>
                     <button type="button" data-index={{product.id}}" class="btn btn-primary update-cart">ویرایش</button>
 
-                    <button type="button" data-index={{product.id}}" class="btn btn-danger delete-product">حذف</button>
+<!--                    <button type="button" data-index={{product.id}}" class="btn btn-danger delete-product">حذف</button>-->
 
                     <a href="{% url 'home' %}" class="btn btn-secondary">بازگشت به صفحه اصلی</a>
                 </div>
@@ -58,7 +58,7 @@
     </div>
 </div>
 {% endfor %}
-
+    <h3>مجموع کل سفارشات : <span id="total-order">{{ total | intcomma }} تومان</span></h3>
     {% else %}
 <br><br>
         <center><h3 class="container">سبد خرید شما خالیست&#128531</h3></center>
@@ -67,41 +67,17 @@
 
 
 <script>
-<!-- $(document).on('click', '.update-cart', function(e){-->
-<!--        e.preventDefault();-->
-<!--        var productid = $(this).data('index')-->
-<!--        var productqty = $('#select'+productid+ option:'selected').text()-->
-
-<!--        $.ajax({-->
-<!--            type: 'POST',-->
-<!--            url: '{% url "cart_update" %}',-->
-<!--            data: {-->
-<!--                product_id: productid,-->
-<!--                product_qty: productqty, // ارسال مقدار درست-->
-<!--                csrfmiddlewaretoken: '{{ csrf_token }}',-->
-<!--                action: 'post'-->
-<!--            },-->
-<!--            success: function(json){-->
-<!--                location.reload();-->
-<!--            },-->
-<!--            error: function(xhr, errmsg, err){-->
-<!--                console.log(xhr.status + ": " + xhr.responseText);-->
-<!--            }-->
-<!--        });-->
-<!--    });-->
-
-
     $(document).on('click', '.update-cart', function(e) {
         e.preventDefault();
         var productid = $(this).data('index');
-        var productqty = $('select' + productid + ' option:selected').val(); // اصلاح انتخابگر و دریافت مقدار صحیح
+        var productQty = $('#select'+productid+ option:'selected').val(); // اصلاح انتخابگر و دریافت مقدار صحیح
 
         $.ajax({
             type: 'POST',
             url: '{% url "cart_update" %}', // تغییر علامت نقل قول
             data: {
                 product_id: productid,
-                product_qty: productqty, // ارسال مقدار درست
+                product_qty: productQty, // ارسال مقدار درست
                 csrfmiddlewaretoken: '{{ csrf_token }}',
                 action: 'post'
             },

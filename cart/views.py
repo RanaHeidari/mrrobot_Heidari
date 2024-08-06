@@ -34,10 +34,11 @@ def cart_update(request):
         product_id = int(request.POST.get('product_id'))
         product_qty = int(request.POST.get('product_qty'))
         cart.update(product=product_id, quantity=product_qty)
+        total = cart.get_total()  # محاسبه مجموع کل سفارشات
 
         response = JsonResponse({'qty': product_qty })
         messages.success(request, "سبد خرید شما ویرایش شد")
-        print(f"Product ID: {product_id}, Quantity: {product_qty}")
+        # print(f"Product ID: {product_id}, Quantity: {product_qty}")
 
         return response
 
